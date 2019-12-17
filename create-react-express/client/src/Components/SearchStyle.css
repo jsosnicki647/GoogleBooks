@@ -1,0 +1,14 @@
+input {
+    display: inline-block;
+    width: 50%;
+    text-align: left;
+    color: red;
+    margin-right: .5em;
+}
+
+button {
+    padding-top: unset !important;
+    padding-bottom: unset !important;
+    height: 30px !important;
+
+}
