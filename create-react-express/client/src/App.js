@@ -16,7 +16,7 @@ class App extends Component {
     e.preventDefault()
     const title = this.state.searchBookTitle
     fetch(
-      "https://www.googleapis.com/books/v1/volumes?q=" + title + "&key=AIzaSyDwSps7qU62IJji7xSY5EkpSAcyApIcyqA"
+      "https://www.googleapis.com/books/v1/volumes?q=" + title + "&key="
     )
       .then(res => res.json())
       .then(data =>
