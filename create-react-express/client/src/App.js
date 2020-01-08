@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Search from "./Components/Search";
+import BookCard from "./Components/BookCard"
 
 class App extends Component {
   state = {
@@ -16,13 +17,19 @@ class App extends Component {
     e.preventDefault()
     const title = this.state.searchBookTitle
     fetch(
-      "https://www.googleapis.com/books/v1/volumes?q=" + title + "&key="
+      "https://www.googleapis.com/books/v1/volumes?q=" + title + "&key=" + APIKEY
     )
       .then(res => res.json())
-      .then(data =>
-        data.items.map(book => {
-          return console.log(book);
-        })
+      .then(data => {
+        console.log("data: ", data)
+        if (data.totalItems > 0){
+          this.setState({ books: data.items })
+        }
+        else{
+          this.setState({ books: ["No Results"]})
+        }
+        console.log("state: ", this.state)
+      }
       );
   };
 
@@ -36,6 +43,17 @@ class App extends Component {
           handleTitleChange={this.handleTitleChange}
           searchBooks={this.handleSearchBooks}
         />
+        {this.state.books[0] != "No Results" ? this.state.books.map(book => (
+          <BookCard
+            id={book.id}
+            key={book.id}
+            title={book.volumeInfo.title}
+            authors={book.volumeInfo.authors ? book.volumeInfo.authors : []}
+            description={book.volumeInfo.description}
+            image={book.volumeInfo.imageLinks.smallThumbnail}
+            link={book.volumeInfo.previewLink}
+          />
+        )) : ''}
       </div>
     );
   }
